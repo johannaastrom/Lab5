@@ -1,0 +1,22 @@
+﻿<Window x:Class="Labb5.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Labb5"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid Background="#FFF4BEBE">
+        <ListBox x:Name="UserBox" HorizontalAlignment="Left" Height="100" Margin="10,10,0,0" VerticalAlignment="Top" Width="100" SelectionChanged="UserBox_SelectionChanged" Background="#FFF3E1E1"/>
+        <ListBox x:Name="AdminBox" HorizontalAlignment="Left" Height="100" Margin="266,10,0,0" VerticalAlignment="Top" Width="100" Background="#FFF3E1E1"/>
+        <TextBox x:Name="MailBox" HorizontalAlignment="Left" Height="23" Margin="10,125,0,0" TextWrapping="Wrap" Text="Enter your email adress..." VerticalAlignment="Top" Width="179"/>
+        <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="23" Margin="10,155,0,0" TextWrapping="Wrap" Text="Enter your name..." VerticalAlignment="Top" Width="179"/>
+        <Button x:Name="AddUser" Content="Add user" HorizontalAlignment="Left" Margin="10,192,0,0" VerticalAlignment="Top" Width="75" Click="AddUser_Click" Background="#FFF3E1E1"/>
+        <Button x:Name="ChangeUser" Content="Change user" HorizontalAlignment="Left" Margin="10,226,0,0" VerticalAlignment="Top" Width="75" Background="#FFF3E1E1"/>
+        <Button x:Name="RemoveUser" Content="Remove user" HorizontalAlignment="Left" Margin="10,259,0,0" VerticalAlignment="Top" Width="75" Click="RemoveUser_Click" Background="#FFF3E1E1"/>
+        <Button x:Name="AddToAdminList" Content="Move to adminlist" HorizontalAlignment="Left" Margin="250,154,0,0" VerticalAlignment="Top" Width="116" Click="AddToAdminList_Click" Background="#FFF3E1E1"/>
+        <Button x:Name="AddToUserList" Content="Move to userlist" HorizontalAlignment="Left" Margin="250,187,0,0" VerticalAlignment="Top" Width="116" Background="#FFF3E1E1"/>
+        <Label x:Name="UserInfo" Content="" HorizontalAlignment="Left" Margin="319,226,0,0" VerticalAlignment="Top" Height="85" Width="171"/>
+
+    </Grid>
+</Window>
