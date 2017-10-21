@@ -38,6 +38,9 @@ namespace Labb5
 
             UserInfo.Content = "Name: " + ((User)UserBox.SelectedItem).name + "\nEmail: " + ((User)UserBox.SelectedItem).email;
 
+            NameBox.Text = ((User)UserBox.SelectedItem).name;
+            MailBox.Text = ((User)UserBox.SelectedItem).email;
+
         }
 
         private void RemoveUser_Click(object sender, RoutedEventArgs e)
@@ -74,7 +77,7 @@ namespace Labb5
 
         private void ChangeUser_Click(object sender, RoutedEventArgs e)
         {
-
+            UserBox.SelectedItem = (new User { name = NameBox.Text, email = MailBox.Text });
         }
     }
     public class User
