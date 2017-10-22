@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 
 namespace Labb5
 {
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -24,23 +23,37 @@ namespace Labb5
         public MainWindow()
         {
             InitializeComponent();
+            UserBox.DisplayMemberPath = "name";
+            AdminBox.DisplayMemberPath = "name";
         }
 
         private void AddUser_Click(object sender, RoutedEventArgs e)
         {
             UserBox.Items.Add(new User { name = NameBox.Text, email = MailBox.Text });
-            UserBox.DisplayMemberPath = "name";
+
+            NameBox.Text = "Enter name...";
+            MailBox.Text = "Enter email adress...";
         }
+
         private void UserBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            AddToAdminList.IsEnabled = UserBox.SelectedIndex >= 0;
-            RemoveUser.IsEnabled = UserBox.SelectedIndex >= 0;
+            if (UserBox.SelectedItem != null)
+            {
+                AddToAdminList.IsEnabled = UserBox.SelectedIndex >= 0;
+                RemoveUser.IsEnabled = UserBox.SelectedIndex >= 0;
 
-            UserInfo.Content = "Name: " + ((User)UserBox.SelectedItem).name + "\nEmail: " + ((User)UserBox.SelectedItem).email;
+                if (UserBox.SelectedIndex < 0)
+                {
+                    UserInfo.Content = " ";
+                }
+                else
+                {
+                    UserInfo.Content = "Name: " + ((User)UserBox.SelectedItem).name + "\nEmail: " + ((User)UserBox.SelectedItem).email;
+                }
 
-            NameBox.Text = ((User)UserBox.SelectedItem).name;
-            MailBox.Text = ((User)UserBox.SelectedItem).email;
-
+                NameBox.Text = ((User)UserBox.SelectedItem).name;
+                MailBox.Text = ((User)UserBox.SelectedItem).email;
+            }
         }
 
         private void RemoveUser_Click(object sender, RoutedEventArgs e)
@@ -63,6 +76,7 @@ namespace Labb5
             if (UserBox.SelectedIndex >= 0)
             {
                 int position = UserBox.SelectedIndex;
+                AdminBox.Items.Add((User)UserBox.SelectedItem);
                 UserBox.Items.RemoveAt(position);
                 if (UserBox.Items.Count <= position)
                     UserBox.SelectedIndex = position - 1;
@@ -71,13 +85,30 @@ namespace Labb5
                 if (UserBox.Items.Count == 0)
                     AddToAdminList.IsEnabled = false;
             }
-            AdminBox.Items.Add(UserBox.SelectedItem);
-            UserBox.Items.Remove(UserBox.SelectedItem);
         }
 
         private void ChangeUser_Click(object sender, RoutedEventArgs e)
         {
-            UserBox.SelectedItem = (new User { name = NameBox.Text, email = MailBox.Text });
+
+        } //slutade fungera.
+
+        private void ChangeUser_Click_1(object sender, RoutedEventArgs e)
+        {
+            int index = UserBox.SelectedIndex;
+            UserBox.Items.RemoveAt(UserBox.SelectedIndex);
+            UserBox.Items.Insert(index, (new User { name = NameBox.Text, email = MailBox.Text }));
+            //UserBox.SelectedItem = (new User { name = NameBox.Text, email = MailBox.Text });
+
+        }
+
+        private void NameBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            NameBox.Text = string.Empty;
+        }
+
+        private void MailBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            MailBox.Text = string.Empty;
         }
     }
     public class User
@@ -95,3 +126,4 @@ namespace Labb5
         }
     }
 }
+
