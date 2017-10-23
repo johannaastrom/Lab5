@@ -48,7 +48,7 @@ namespace Labb5
                 }
                 else
                 {
-                    UserInfo.Content = "Name: " + ((User)UserBox.SelectedItem).name + "\nEmail: " + ((User)UserBox.SelectedItem).email;
+                    UserInfo.Content = "Full information about the selected person:\n\nName: " + ((User)UserBox.SelectedItem).name + "\nEmail: " + ((User)UserBox.SelectedItem).email;
                 }
 
                 NameBox.Text = ((User)UserBox.SelectedItem).name;
@@ -75,13 +75,13 @@ namespace Labb5
         {
             if (UserBox.SelectedIndex >= 0)
             {
-                int position = UserBox.SelectedIndex;
+                int positionUser = UserBox.SelectedIndex;
                 AdminBox.Items.Add((User)UserBox.SelectedItem);
-                UserBox.Items.RemoveAt(position);
-                if (UserBox.Items.Count <= position)
-                    UserBox.SelectedIndex = position - 1;
+                UserBox.Items.RemoveAt(positionUser);
+                if (UserBox.Items.Count <= positionUser)
+                    UserBox.SelectedIndex = positionUser - 1;
                 else
-                    UserBox.SelectedIndex = position;
+                    UserBox.SelectedIndex = positionUser;
                 if (UserBox.Items.Count == 0)
                     AddToAdminList.IsEnabled = false;
             }
@@ -98,7 +98,6 @@ namespace Labb5
             UserBox.Items.RemoveAt(UserBox.SelectedIndex);
             UserBox.Items.Insert(index, (new User { name = NameBox.Text, email = MailBox.Text }));
             //UserBox.SelectedItem = (new User { name = NameBox.Text, email = MailBox.Text });
-
         }
 
         private void NameBox_GotFocus(object sender, RoutedEventArgs e)
@@ -108,7 +107,49 @@ namespace Labb5
 
         private void MailBox_GotFocus(object sender, RoutedEventArgs e)
         {
+            //slutade fungera
+        } //slutade fungera.
+
+        private void MailBox_GotFocus_1(object sender, RoutedEventArgs e)
+        {
             MailBox.Text = string.Empty;
+        }
+
+        private void AddToUserList_Click(object sender, RoutedEventArgs e)
+        {
+            if (AdminBox.SelectedIndex >= 0)
+            {
+                int positionAdmin = AdminBox.SelectedIndex;
+                UserBox.Items.Add((User)AdminBox.SelectedItem);
+                AdminBox.Items.RemoveAt(positionAdmin);
+                if (AdminBox.Items.Count <= positionAdmin)
+                    AdminBox.SelectedIndex = positionAdmin - 1;
+                else
+                    AdminBox.SelectedIndex = positionAdmin;
+                if (AdminBox.Items.Count == 0)
+                    AddToUserList.IsEnabled = false;
+            }
+        }
+
+        private void AdminBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (AdminBox.SelectedItem != null)
+            {
+                AddToUserList.IsEnabled = AdminBox.SelectedIndex >= 0;
+                RemoveUser.IsEnabled = AdminBox.SelectedIndex >= 0;
+
+                if (AdminBox.SelectedIndex < 0)
+                {
+                    UserInfo.Content = " ";
+                }
+                else
+                {
+                    UserInfo.Content = "Full information about the selected person:\n\nName: " + ((User)AdminBox.SelectedItem).name + "\nEmail: " + ((User)AdminBox.SelectedItem).email;
+                }
+
+                NameBox.Text = ((User)AdminBox.SelectedItem).name;
+                MailBox.Text = ((User)AdminBox.SelectedItem).email;
+            }
         }
     }
     public class User
@@ -126,4 +167,3 @@ namespace Labb5
         }
     }
 }
-
