@@ -87,28 +87,26 @@ namespace Labb5
             }
         }
 
-        private void ChangeUser_Click(object sender, RoutedEventArgs e)
-        {
-
-        } //slutade fungera.
 
         private void ChangeUser_Click_1(object sender, RoutedEventArgs e)
         {
-            int index = UserBox.SelectedIndex;
-            UserBox.Items.RemoveAt(UserBox.SelectedIndex);
-            UserBox.Items.Insert(index, (new User { name = NameBox.Text, email = MailBox.Text }));
-            //UserBox.SelectedItem = (new User { name = NameBox.Text, email = MailBox.Text });
+            if (UserBox.SelectedIndex >= 0)
+            {
+                int index = UserBox.SelectedIndex;
+                UserBox.Items.RemoveAt(UserBox.SelectedIndex);
+                UserBox.Items.Insert(index, (new User { name = NameBox.Text, email = MailBox.Text }));
+            }
+            else
+            {
+                UserInfo.Content = "You need to select a user first!";
+            }
+
         }
 
         private void NameBox_GotFocus(object sender, RoutedEventArgs e)
         {
             NameBox.Text = string.Empty;
         }
-
-        private void MailBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            //slutade fungera
-        } //slutade fungera.
 
         private void MailBox_GotFocus_1(object sender, RoutedEventArgs e)
         {

@@ -5,18 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Labb5"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid Background="#FFF4BEBE" Margin="0,0,-109.6,-29.2">
+        Title="MainWindow" Height="378.8" Width="637">
+    <Grid Background="#FFF4BEBE" Margin="0,0,-6.2,-2.2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="331*"/>
+            <ColumnDefinition Width="297*"/>
+        </Grid.ColumnDefinitions>
         <ListBox x:Name="UserBox" HorizontalAlignment="Left" Height="100" Margin="10,28,0,0" VerticalAlignment="Top" Width="179" SelectionChanged="UserBox_SelectionChanged" Background="#FFF3E1E1"/>
-        <ListBox x:Name="AdminBox" HorizontalAlignment="Left" Height="100" Margin="398,28,0,0" VerticalAlignment="Top" Width="206" Background="#FFF3E1E1" SelectionChanged="AdminBox_SelectionChanged"/>
+        <ListBox x:Name="AdminBox" HorizontalAlignment="Left" Height="100" Margin="66.6,28,0,0" VerticalAlignment="Top" Width="206" Background="#FFF3E1E1" SelectionChanged="AdminBox_SelectionChanged" Grid.Column="1"/>
         <TextBox x:Name="MailBox" HorizontalAlignment="Left" Height="23" Margin="10,176,0,0" TextWrapping="Wrap" Text="Enter email adress..." VerticalAlignment="Top" Width="179" GotFocus="MailBox_GotFocus_1"/>
         <TextBox x:Name="NameBox" HorizontalAlignment="Left" Height="23" Margin="10,148,0,0" TextWrapping="Wrap" Text="Enter name..." VerticalAlignment="Top" Width="179" GotFocus="NameBox_GotFocus"/>
         <Button x:Name="AddUser" Content="Add user" HorizontalAlignment="Left" Margin="10,226,0,0" VerticalAlignment="Top" Width="100" Click="AddUser_Click" Background="#FFF3E1E1"/>
         <Button x:Name="ChangeUser" Content="Change user info" HorizontalAlignment="Left" Margin="10,259,0,0" VerticalAlignment="Top" Width="100" Background="#FFF3E1E1" Click="ChangeUser_Click_1"/>
         <Button x:Name="RemoveUser" Content="Remove user" HorizontalAlignment="Left" Margin="10,296,0,0" VerticalAlignment="Top" Width="100" Click="RemoveUser_Click" Background="#FFF3E1E1"/>
-        <Button x:Name="AddToAdminList" Content="Move to adminlist &gt;&gt;" HorizontalAlignment="Left" Margin="223,54,0,0" VerticalAlignment="Top" Width="137" Click="AddToAdminList_Click" Background="#FFF3E1E1"/>
-        <Button x:Name="AddToUserList" Content="&lt;&lt; Move to userlist" HorizontalAlignment="Left" Margin="223,78,0,0" VerticalAlignment="Top" Width="137" Background="#FFF3E1E1" Click="AddToUserList_Click"/>
-        <Label x:Name="UserInfo" Content="" HorizontalAlignment="Left" Margin="317,201,0,0" VerticalAlignment="Top" Height="139" Width="246"/>
+        <Button x:Name="AddToAdminList" Content="Move to adminlist &gt;&gt;" HorizontalAlignment="Left" Margin="223,54,0,0" VerticalAlignment="Top" Width="137" Click="AddToAdminList_Click" Background="#FFF3E1E1" Grid.ColumnSpan="2"/>
+        <Button x:Name="AddToUserList" Content="&lt;&lt; Move to userlist" HorizontalAlignment="Left" Margin="223,78,0,0" VerticalAlignment="Top" Width="137" Background="#FFF3E1E1" Click="AddToUserList_Click" Grid.ColumnSpan="2"/>
+        <Label x:Name="UserInfo" Content="" HorizontalAlignment="Left" Margin="317,201,0,0" VerticalAlignment="Top" Height="139" Width="246" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>
