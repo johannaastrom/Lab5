@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace Labb5
 {
@@ -29,7 +30,14 @@ namespace Labb5
 
         private void AddUser_Click(object sender, RoutedEventArgs e)
         {
-            UserBox.Items.Add(new User { name = NameBox.Text, email = MailBox.Text });
+            bool isEmail = Regex.IsMatch(MailBox.Text, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase);
+
+            if (isEmail)
+                UserBox.Items.Add(new User { name = NameBox.Text, email = MailBox.Text });
+            else
+            {
+                UserInfo.Content = "Invalid email adress";
+            }
 
             NameBox.Text = "Enter name...";
             MailBox.Text = "Enter email adress...";
@@ -37,28 +45,32 @@ namespace Labb5
 
         private void UserBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var userName = ((User)UserBox.SelectedItem);
+            var userMail = ((User)UserBox.SelectedItem);
             if (UserBox.SelectedItem != null)
             {
                 AddToAdminList.IsEnabled = UserBox.SelectedIndex >= 0;
                 RemoveUser.IsEnabled = UserBox.SelectedIndex >= 0;
 
-                if (UserBox.SelectedIndex < 0)
+                if (UserBox.SelectedIndex >= 0)
+                {
+                    UserInfo.Content = "Full information about the selected person:\n\nName: " + ((User)UserBox.SelectedItem).name + "\nEmail: " + ((User)UserBox.SelectedItem).email;
+                    
+                    
+                }
+                else if (UserBox.SelectedIndex < 0)
                 {
                     UserInfo.Content = " ";
                 }
-                else
-                {
-                    UserInfo.Content = "Full information about the selected person:\n\nName: " + ((User)UserBox.SelectedItem).name + "\nEmail: " + ((User)UserBox.SelectedItem).email;
-                }
+                    NameBox.Text = userName.name;
+                    MailBox.Text = userMail.email;
 
-                NameBox.Text = ((User)UserBox.SelectedItem).name;
-                MailBox.Text = ((User)UserBox.SelectedItem).email;
             }
         }
 
         private void RemoveUser_Click(object sender, RoutedEventArgs e)
         {
-            if (UserBox.SelectedIndex >= 0)
+            if (UserBox.SelectedIndex >= 0 && list1Active)
             {
                 int position = UserBox.SelectedIndex;
                 UserBox.Items.RemoveAt(position);
@@ -67,6 +79,17 @@ namespace Labb5
                 else
                     UserBox.SelectedIndex = position;
                 if (UserBox.Items.Count == 0)
+                    RemoveUser.IsEnabled = false;
+            }
+            if (AdminBox.SelectedIndex >= 0 && list2Active)
+            {
+                int position = AdminBox.SelectedIndex;
+                AdminBox.Items.RemoveAt(position);
+                if (AdminBox.Items.Count <= position)
+                    AdminBox.SelectedIndex = position - 1;
+                else
+                    AdminBox.SelectedIndex = position;
+                if (AdminBox.Items.Count == 0)
                     RemoveUser.IsEnabled = false;
             }
         }
@@ -90,28 +113,38 @@ namespace Labb5
 
         private void ChangeUser_Click_1(object sender, RoutedEventArgs e)
         {
-            if (UserBox.SelectedIndex >= 0)
+            if (UserBox.SelectedIndex >= 0 && list1Active)
             {
                 int index = UserBox.SelectedIndex;
                 UserBox.Items.RemoveAt(UserBox.SelectedIndex);
                 UserBox.Items.Insert(index, (new User { name = NameBox.Text, email = MailBox.Text }));
+                UserInfo.Content = " ";
+                //UserBox.SelectedIndex = -1;
+                UserBox.Items.Refresh();
+
+                //UserInfo.Content = "Full information about the selected person:\n\nName: " + ((User)UserBox.SelectedItem).name + "\nEmail: " + ((User)UserBox.SelectedItem).email;
             }
-            else
+            if (AdminBox.SelectedIndex >= 0 && list2Active)
             {
-                UserInfo.Content = "You need to select a user first!";
+                int index = AdminBox.SelectedIndex;
+                AdminBox.Items.RemoveAt(AdminBox.SelectedIndex);
+                AdminBox.Items.Insert(index, (new User { name = NameBox.Text, email = MailBox.Text }));
+                UserInfo.Content = " ";
+                //AdminBox.SelectedIndex = -1;
+                AdminBox.Items.Refresh();
+
+
+                //UserInfo.Content = "Full information about the selected person:\n\nName: " + ((User)AdminBox.SelectedItem).name + "\nEmail: " + ((User)AdminBox.SelectedItem).email;
+
             }
+            
+            //else if (UserBox.SelectedIndex < 0 || AdminBox.SelectedIndex < 0)
+            //{
+            //    UserInfo.Content = "You need to select a user first!";
+            //}
 
         }
 
-        private void NameBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            NameBox.Text = string.Empty;
-        }
-
-        private void MailBox_GotFocus_1(object sender, RoutedEventArgs e)
-        {
-            MailBox.Text = string.Empty;
-        }
 
         private void AddToUserList_Click(object sender, RoutedEventArgs e)
         {
@@ -128,27 +161,57 @@ namespace Labb5
                     AddToUserList.IsEnabled = false;
             }
         }
+        private bool list1Active;
+        private bool list2Active;
 
         private void AdminBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var userName = ((User)AdminBox.SelectedItem);
+            var userMail = ((User)AdminBox.SelectedItem);
             if (AdminBox.SelectedItem != null)
             {
                 AddToUserList.IsEnabled = AdminBox.SelectedIndex >= 0;
                 RemoveUser.IsEnabled = AdminBox.SelectedIndex >= 0;
 
-                if (AdminBox.SelectedIndex < 0)
+                if (AdminBox.SelectedIndex >= 0)
+                {
+                    UserInfo.Content = "Full information about the selected person:\n\nName: " + ((User)AdminBox.SelectedItem).name + "\nEmail: " + ((User)AdminBox.SelectedItem).email;
+
+
+                }
+                else if (AdminBox.SelectedIndex < 0)
                 {
                     UserInfo.Content = " ";
                 }
-                else
-                {
-                    UserInfo.Content = "Full information about the selected person:\n\nName: " + ((User)AdminBox.SelectedItem).name + "\nEmail: " + ((User)AdminBox.SelectedItem).email;
-                }
-
-                NameBox.Text = ((User)AdminBox.SelectedItem).name;
-                MailBox.Text = ((User)AdminBox.SelectedItem).email;
+                NameBox.Text = userName.name;
+                MailBox.Text = userMail.email;
             }
+
         }
+
+        private void UserBox_Focus(object sender, RoutedEventArgs e)
+        {
+            list1Active = true;
+            list2Active = false;
+        }
+
+        private void AdminBox_Focus(object sender, RoutedEventArgs e)
+        {
+            list2Active = true;
+            list1Active = false;
+        }
+
+        private void NameBox_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            NameBox.Text = string.Empty;
+        }
+
+        private void MailBox_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MailBox.Text = string.Empty;
+        }
+
+
     }
     public class User
     {
